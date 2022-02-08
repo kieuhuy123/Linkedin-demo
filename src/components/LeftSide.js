@@ -9,10 +9,12 @@ const LeftSide = () => {
             <Photo />
             <Link>Welcome, there</Link>
           </a>
+
           <a>
             <AddPhotoText>Add a photo</AddPhotoText>
           </a>
         </UserInfo>
+
         <Widget>
           <a>
             <div>
@@ -30,6 +32,27 @@ const LeftSide = () => {
           </span>
         </Item>
       </ArtCard>
+
+      <CommunityCard>
+        <a>
+          <span>Group</span>
+        </a>
+
+        <a>
+          <span>
+            Events
+            <img src="/images/plus-icon.svg" alt="" />
+          </span>
+        </a>
+
+        <a>
+          <span>Follow Hashtags</span>
+        </a>
+        
+        <a>
+          <span>Discover more</span>
+        </a>
+      </CommunityCard>
     </Container>
   );
 };
@@ -135,7 +158,6 @@ const Widget = styled.div`
     color: rgba(0, 0, 0, 1);
   }
 `;
-
 const Item = styled.a`
   border-color: rgba(0, 0, 0, 0.8);
   text-align: left;
@@ -152,7 +174,38 @@ const Item = styled.a`
   }
 
   &:hover {
-      background-color: rgba(0,0,0,0.06);
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+`;
+
+const CommunityCard = styled(ArtCard)`
+  padding: 8px 0 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  a {
+    color: black;
+    padding: 4px 12px 4px 12px;
+    font-size: 12px;
+    &:hover {
+      color: #0a66c2;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &:last-child {
+      color: rgba(0, 0, 0, 0.6);
+      text-decoration: none;
+      border-top: 1px solid #d6cec2;
+      padding: 12px;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+    }
   }
 `;
 export default LeftSide;

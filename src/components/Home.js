@@ -1,8 +1,10 @@
 import styled from "styled-components";
+// Import components
 import Header from "./Header";
 import LeftSide from "./LeftSide";
 import Main from "./Main";
 import RightSide from "./RightSide";
+
 const Home = () => {
   return (
     <>
@@ -22,7 +24,7 @@ const Home = () => {
           <LeftSide />
 
           <Main />
-          
+
           <RightSide />
         </Layout>
       </Container>

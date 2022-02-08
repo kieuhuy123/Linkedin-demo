@@ -65,6 +65,7 @@ const Join = styled.a`
     background-color: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.9);
     text-decoration: none;
+    cursor: pointer;
   }
 `;
 
@@ -84,6 +85,7 @@ const SignIn = styled.a`
     background-color: rgba(112, 181, 249, 0.15);
     color: #0a66c2;
     text-decoration: none;
+    cursor: pointer;
   }
 `;
 
