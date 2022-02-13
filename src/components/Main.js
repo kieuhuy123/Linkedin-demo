@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PostModal from "./PostModal";
 const Main = () => {
   return (
     <Container>
@@ -93,6 +94,7 @@ const Main = () => {
           </SocialActions>
         </Article>
       </div>
+      <PostModal/>
     </Container>
   );
 };
@@ -278,7 +280,7 @@ const SocialActions = styled.div`
   align-items: flex;
   display: flex;
   justify-content: flex-start;
-  margin: 0 ;
+  margin: 0;
   min-height: 40px;
   padding: 4px 8px;
   button {
@@ -290,7 +292,6 @@ const SocialActions = styled.div`
     @media (min-width: 768px) {
       span {
         margin-left: 8px;
-        
       }
     }
   }
