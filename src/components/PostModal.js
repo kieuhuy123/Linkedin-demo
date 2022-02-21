@@ -178,6 +178,7 @@ const Content = styled.div`
   overflow: initial;
   border-radius: 5px;
 `;
+
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -307,8 +308,10 @@ const mapStateToProps = (state) => {
     user: state.userState.user,
   };
 };
+
 const mapDispatchToProps = (dispatch) => ({
   postArticle: (payload) => dispatch(postArticleAPI(payload)),
 });
+
 // export default PostModal;
 export default connect(mapStateToProps, mapDispatchToProps)(PostModal);
