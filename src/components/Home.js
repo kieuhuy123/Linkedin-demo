@@ -1,19 +1,22 @@
 import styled from "styled-components";
 import { Navigate } from "react-router-dom";
-import { connect } from "react-redux";
 // Import components
 import Header from "./Header";
 import LeftSide from "./LeftSide";
 import Main from "./Main";
 import RightSide from "./RightSide";
 
-const Home = (props) => {
+import { useSelector } from "react-redux";
+const Home = () => {
+  const user = useSelector((state) => state.userState.user);
+  console.log(user);
   return (
     <>
-      <Header />
+      <Header user={user} />
 
       <Container>
-        {!props.user && <Navigate to="/" />}
+        
+        {!user && <Navigate to="/" />}
         <Section>
           <h5>
             <a>Hiring in a hurry? - </a>
@@ -25,9 +28,9 @@ const Home = (props) => {
         </Section>
 
         <Layout>
-          <LeftSide />
+          <LeftSide user={user} />
 
-          <Main />
+          <Main user={user} />
 
           <RightSide />
         </Layout>
@@ -89,11 +92,4 @@ const Layout = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.userState.user,
-  };
-};
-
-export default connect(mapStateToProps)(Home);
-// export default Home;
+export default Home;

@@ -3,14 +3,20 @@ import PostModal from "./PostModal";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
+import { useDispatch, useSelector } from "react-redux";
 import ReactPlayer from "react-player";
 import { getArticleAPI } from "../actions";
 
-const Main = (props) => {
+const Main = ({ user }) => {
   const [showModal, setShowModal] = useState("close");
 
+  const loading = useSelector((state) => state.articleState.loading);
+  const articles = useSelector((state) => state.articleState.articles);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    props.getArticles();
+    dispatch(getArticleAPI());
   });
 
   const handleClick = (e) => {
@@ -36,21 +42,18 @@ const Main = (props) => {
   };
   return (
     <>
-      {props.articles.length === 0 ? (
+      {articles.length === 0 ? (
         <p>There are no articles</p>
       ) : (
         <Container>
           <ShareBox>
             <div>
-              {props.user && props.user.photoURL ? (
-                <img src={props.user.photoURL} alt="" />
+              {user && user.photoURL ? (
+                <img src={user.photoURL} alt="" />
               ) : (
                 <img src="/images/user.svg" alt="" />
               )}
-              <button
-                onClick={handleClick}
-                disabled={props.loading ? true : false}
-              >
+              <button onClick={handleClick} disabled={loading ? true : false}>
                 Start a post
               </button>
             </div>
@@ -83,9 +86,9 @@ const Main = (props) => {
           </ShareBox>
 
           <Content>
-            {props.loading && <img src="/images/Fading balls.gif" alt="" />}
-            {props.articles.length > 0 &&
-              props.articles.map((article, key) => (
+            {loading && <img src="/images/Fading balls.gif" alt="" />}
+            {articles.length > 0 &&
+              articles.map((article, key) => (
                 <Article key={key}>
                   <SharedActor>
                     <a>
@@ -161,7 +164,11 @@ const Main = (props) => {
                 </Article>
               ))}
           </Content>
-          <PostModal showModal={showModal} handleClick={handleClick} />
+          <PostModal
+            showModal={showModal}
+            handleClick={handleClick}
+            user={user}
+          />
         </Container>
       )}
     </>
@@ -377,16 +384,4 @@ const Content = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => {
-  return {
-    loading: state.articleState.loading,
-    user: state.userState.user,
-    articles: state.articleState.articles,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  getArticles: () => dispatch(getArticleAPI()),
-});
-// export default Main;
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;

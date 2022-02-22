@@ -1,17 +1,18 @@
 import styled from "styled-components";
 import { useState } from "react";
 import ReactPlayer from "react-player";
-import { connect } from "react-redux";
 
+import { useDispatch } from "react-redux";
 import firebase from "firebase/compat/app";
 import { postArticleAPI } from "../actions";
 
-const PostModal = (props) => {
+const PostModal = ({ user, handleClick, showModal }) => {
   const [editorText, setEditorText] = useState("");
   const [shareImage, setShareImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
   const [assetArea, setAssetArea] = useState("");
 
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     const image = e.target.files[0];
 
@@ -41,12 +42,13 @@ const PostModal = (props) => {
     const payload = {
       image: shareImage,
       video: videoLink,
-      user: props.user,
+      user: user,
       description: editorText,
       timestamp: firebase.firestore.Timestamp.now(),
     };
 
-    props.postArticle(payload);
+    // props.postArticle(payload);
+    dispatch(postArticleAPI(payload));
     reset(e);
   };
 
@@ -55,12 +57,12 @@ const PostModal = (props) => {
     setShareImage("");
     setVideoLink("");
     setAssetArea("");
-    props.handleClick(e);
+    handleClick(e);
   };
 
   return (
     <>
-      {props.showModal === "open" && (
+      {showModal === "open" && (
         <Container>
           <Content>
             <Header>
@@ -71,13 +73,13 @@ const PostModal = (props) => {
             </Header>
             <SharedContent>
               <UserInfo>
-                {props.user.photoURL ? (
-                  <img src={props.user.photoURL} alt="" />
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt="" />
                 ) : (
                   <img src="/images/user.svg" alt="" />
                 )}
 
-                <span>{props.user.displayName}</span>
+                <span>{user.displayName}</span>
               </UserInfo>
 
               <Editor>
@@ -303,15 +305,4 @@ const UploadImage = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.userState.user,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  postArticle: (payload) => dispatch(postArticleAPI(payload)),
-});
-
-// export default PostModal;
-export default connect(mapStateToProps, mapDispatchToProps)(PostModal);
+export default PostModal;
